@@ -9,11 +9,12 @@ namespace Final.Data
 {
     public class FinalContext : DbContext
     {
-        public FinalContext (DbContextOptions<FinalContext> options)
+        public FinalContext(DbContextOptions<FinalContext> options)
             : base(options)
         {
         }
 
         public DbSet<Final.Models.Product> Product { get; set; } = default!;
+        public DbSet<Final.Models.User> Users { get; set; } = default!;
     }
 }
