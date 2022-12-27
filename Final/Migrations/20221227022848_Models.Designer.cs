@@ -4,6 +4,7 @@ using Final.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final.Migrations
 {
     [DbContext(typeof(FinalContext))]
-    partial class FinalContextModelSnapshot : ModelSnapshot
+    [Migration("20221227022848_Models")]
+    partial class Models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,31 +25,19 @@ namespace Final.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Final.Models.Customer", b =>
+            modelBuilder.Entity("Final.Models.EmployedAt", b =>
                 {
-                    b.Property<int?>("customerId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("customerId"));
-
-                    b.Property<int?>("personId")
-                        .HasColumnType("int");
-
-                    b.HasKey("customerId");
-
-                    b.HasIndex("personId");
-
-                    b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("Final.Models.EmployedAt", b =>
-                {
-                    b.Property<int?>("RetailChainretailId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("employedSince")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("employeeId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("retailId")
                         .HasColumnType("int");
@@ -54,26 +45,18 @@ namespace Final.Migrations
                     b.Property<string>("role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("staffId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("RetailChainretailId");
-
-                    b.HasIndex("staffId");
+                    b.HasKey("Id");
 
                     b.ToTable("EmployedAts");
                 });
 
             modelBuilder.Entity("Final.Models.Inventory", b =>
                 {
-                    b.Property<int?>("inventoryId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("inventoryId"));
-
-                    b.Property<int?>("RetailChainretailId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<DateTime?>("lastUpdated")
                         .HasColumnType("datetime2");
@@ -81,36 +64,29 @@ namespace Final.Migrations
                     b.Property<int?>("productId")
                         .HasColumnType("int");
 
-                    b.Property<string>("productId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int?>("quantity")
                         .HasColumnType("int");
 
                     b.Property<int?>("retailId")
                         .HasColumnType("int");
 
-                    b.HasKey("inventoryId");
-
-                    b.HasIndex("RetailChainretailId");
-
-                    b.HasIndex("productId1");
+                    b.HasKey("Id");
 
                     b.ToTable("Inventories");
                 });
 
             modelBuilder.Entity("Final.Models.Order", b =>
                 {
-                    b.Property<int?>("orderId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("orderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("personId")
+                    b.Property<int?>("customerId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("subtotal")
@@ -122,20 +98,18 @@ namespace Final.Migrations
                     b.Property<decimal?>("vat")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("orderId");
-
-                    b.HasIndex("personId");
+                    b.HasKey("Id");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Final.Models.Person", b =>
                 {
-                    b.Property<int?>("personId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("personId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<string>("address")
                         .HasColumnType("nvarchar(max)");
@@ -161,7 +135,7 @@ namespace Final.Migrations
                     b.Property<string>("status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("personId");
+                    b.HasKey("Id");
 
                     b.ToTable("Persons");
                 });
@@ -187,6 +161,12 @@ namespace Final.Migrations
 
             modelBuilder.Entity("Final.Models.Product_Order", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("countingUnit")
                         .HasColumnType("nvarchar(max)");
 
@@ -196,29 +176,24 @@ namespace Final.Migrations
                     b.Property<int?>("productId")
                         .HasColumnType("int");
 
-                    b.Property<string>("productId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int?>("quantity")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("total")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasIndex("orderId");
-
-                    b.HasIndex("productId1");
+                    b.HasKey("Id");
 
                     b.ToTable("Product_Orders");
                 });
 
             modelBuilder.Entity("Final.Models.Refund", b =>
                 {
-                    b.Property<int?>("refundId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("refundId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
@@ -229,28 +204,21 @@ namespace Final.Migrations
                     b.Property<int?>("productId")
                         .HasColumnType("int");
 
-                    b.Property<string>("productId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("refundId");
-
-                    b.HasIndex("orderId");
-
-                    b.HasIndex("productId1");
+                    b.HasKey("Id");
 
                     b.ToTable("Refunds");
                 });
 
             modelBuilder.Entity("Final.Models.RetailChain", b =>
                 {
-                    b.Property<int?>("retailId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("retailId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<string>("address")
                         .HasColumnType("nvarchar(max)");
@@ -258,18 +226,18 @@ namespace Final.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("retailId");
+                    b.HasKey("Id");
 
                     b.ToTable("RetailChains");
                 });
 
             modelBuilder.Entity("Final.Models.Staff", b =>
                 {
-                    b.Property<int?>("staffId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("staffId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<int?>("personId")
                         .HasColumnType("int");
@@ -277,36 +245,34 @@ namespace Final.Migrations
                     b.Property<string>("position")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("staffId");
-
-                    b.HasIndex("personId");
+                    b.HasKey("Id");
 
                     b.ToTable("Staffs");
                 });
 
             modelBuilder.Entity("Final.Models.Supplier", b =>
                 {
-                    b.Property<int?>("supplierId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("supplierId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("supplierId");
+                    b.HasKey("Id");
 
                     b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("Final.Models.Supplying", b =>
                 {
-                    b.Property<int?>("supplyingId")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("supplyingId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<int>("amount")
                         .HasColumnType("int");
@@ -323,121 +289,28 @@ namespace Final.Migrations
                     b.Property<int?>("productId")
                         .HasColumnType("int");
 
-                    b.Property<string>("productId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int?>("supplierId")
                         .HasColumnType("int");
 
-                    b.HasKey("supplyingId");
-
-                    b.HasIndex("productId1");
-
-                    b.HasIndex("supplierId");
+                    b.HasKey("Id");
 
                     b.ToTable("Supplyings");
                 });
 
-            modelBuilder.Entity("Final.Models.Customer", b =>
+            modelBuilder.Entity("Final.Models.User", b =>
                 {
-                    b.HasOne("Final.Models.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("personId");
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Navigation("Person");
-                });
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
-            modelBuilder.Entity("Final.Models.EmployedAt", b =>
-                {
-                    b.HasOne("Final.Models.RetailChain", "RetailChain")
-                        .WithMany()
-                        .HasForeignKey("RetailChainretailId");
+                    b.Property<int?>("personId")
+                        .HasColumnType("int");
 
-                    b.HasOne("Final.Models.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("staffId");
+                    b.HasKey("Id");
 
-                    b.Navigation("RetailChain");
-
-                    b.Navigation("Staff");
-                });
-
-            modelBuilder.Entity("Final.Models.Inventory", b =>
-                {
-                    b.HasOne("Final.Models.RetailChain", "RetailChain")
-                        .WithMany()
-                        .HasForeignKey("RetailChainretailId");
-
-                    b.HasOne("Final.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("productId1");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("RetailChain");
-                });
-
-            modelBuilder.Entity("Final.Models.Order", b =>
-                {
-                    b.HasOne("Final.Models.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("personId");
-
-                    b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("Final.Models.Product_Order", b =>
-                {
-                    b.HasOne("Final.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("orderId");
-
-                    b.HasOne("Final.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("productId1");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Final.Models.Refund", b =>
-                {
-                    b.HasOne("Final.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("orderId");
-
-                    b.HasOne("Final.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("productId1");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Final.Models.Staff", b =>
-                {
-                    b.HasOne("Final.Models.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("personId");
-
-                    b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("Final.Models.Supplying", b =>
-                {
-                    b.HasOne("Final.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("productId1");
-
-                    b.HasOne("Final.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("supplierId");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Supplier");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
