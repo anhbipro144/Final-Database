@@ -22,11 +22,11 @@ namespace Final.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Product.ToListAsync());
+            return View(await _context.Product.ToListAsync());
         }
 
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Product == null)
             {
@@ -86,7 +86,7 @@ namespace Final.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("productId,productName,categoryId,price")] Product product)
+        public async Task<IActionResult> Edit(int? id, [Bind("productId,productName,categoryId,price")] Product product)
         {
             if (id != product.productId)
             {
@@ -125,7 +125,7 @@ namespace Final.Controllers
             }
 
             var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.productId == id);
+                .FirstOrDefaultAsync(m => m.productId == Convert.ToInt32(id));
             if (product == null)
             {
                 return NotFound();
@@ -148,14 +148,14 @@ namespace Final.Controllers
             {
                 _context.Product.Remove(product);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(string id)
+        private bool ProductExists(int? id)
         {
-          return _context.Product.Any(e => e.productId == id);
+            return _context.Product.Any(e => e.productId == id);
         }
     }
 }

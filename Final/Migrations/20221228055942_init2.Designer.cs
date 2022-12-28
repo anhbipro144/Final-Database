@@ -4,6 +4,7 @@ using Final.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final.Migrations
 {
     [DbContext(typeof(FinalContext))]
-    partial class FinalContextModelSnapshot : ModelSnapshot
+    [Migration("20221228055942_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +97,7 @@ namespace Final.Migrations
                         new
                         {
                             orderId = 1,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(280),
+                            createdAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5409),
                             personId = 1,
                             subtotal = 200m,
                             total = 220m,
@@ -103,7 +106,7 @@ namespace Final.Migrations
                         new
                         {
                             orderId = 2,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(291),
+                            createdAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5417),
                             personId = 2,
                             subtotal = 300m,
                             total = 330m,
@@ -112,7 +115,7 @@ namespace Final.Migrations
                         new
                         {
                             orderId = 3,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(295),
+                            createdAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5421),
                             personId = 3,
                             subtotal = 400m,
                             total = 440m,
@@ -222,7 +225,7 @@ namespace Final.Migrations
                         {
                             personId = 1,
                             address = "312, Lac Long Quan",
-                            dateOfBirth = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(318),
+                            dateOfBirth = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5435),
                             email = "nbi2271@gmail.com",
                             firstName = "Neo",
                             gender = "Male",
@@ -234,7 +237,7 @@ namespace Final.Migrations
                         {
                             personId = 2,
                             address = "262, Lac Long Quan",
-                            dateOfBirth = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(323),
+                            dateOfBirth = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5439),
                             email = "nbi6731@gmail.com",
                             firstName = "Lanh",
                             gender = "Male",
@@ -246,7 +249,7 @@ namespace Final.Migrations
                         {
                             personId = 3,
                             address = "458, Nguyen Huu Tho",
-                            dateOfBirth = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(327),
+                            dateOfBirth = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5442),
                             email = "nbi9922@gmail.com",
                             firstName = "Bi",
                             gender = "Male",
@@ -336,7 +339,7 @@ namespace Final.Migrations
                         new
                         {
                             refundId = 1,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(386),
+                            createdAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5486),
                             orderId = 1,
                             productId = 1,
                             reason = "FOr no reason"
@@ -344,7 +347,7 @@ namespace Final.Migrations
                         new
                         {
                             refundId = 2,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(390),
+                            createdAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5490),
                             orderId = 2,
                             productId = 2,
                             reason = "For no reason again!"
@@ -352,7 +355,7 @@ namespace Final.Migrations
                         new
                         {
                             refundId = 3,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(392),
+                            createdAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5492),
                             orderId = 3,
                             productId = 3,
                             reason = "Just like it"
@@ -459,7 +462,7 @@ namespace Final.Migrations
 
                     b.HasIndex("productId");
 
-                    b.ToTable("Storages");
+                    b.ToTable("Inventories");
 
                     b.HasData(
                         new
@@ -561,9 +564,9 @@ namespace Final.Migrations
                         {
                             supplyingId = 1,
                             amount = 10,
-                            arrivedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(506),
+                            arrivedAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5532),
                             hasArrived = false,
-                            orderedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(507),
+                            orderedAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5533),
                             productId = 1,
                             supplierId = 1
                         },
@@ -571,9 +574,9 @@ namespace Final.Migrations
                         {
                             supplyingId = 2,
                             amount = 20,
-                            arrivedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(511),
+                            arrivedAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5535),
                             hasArrived = true,
-                            orderedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(513),
+                            orderedAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5537),
                             productId = 2,
                             supplierId = 2
                         },
@@ -581,9 +584,9 @@ namespace Final.Migrations
                         {
                             supplyingId = 3,
                             amount = 30,
-                            arrivedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(515),
+                            arrivedAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5573),
                             hasArrived = false,
-                            orderedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(516),
+                            orderedAt = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5575),
                             productId = 3,
                             supplierId = 3
                         });
@@ -616,21 +619,21 @@ namespace Final.Migrations
                         {
                             staffId = 1,
                             retailId = 1,
-                            employedSince = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(238),
+                            employedSince = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5384),
                             role = "Manager"
                         },
                         new
                         {
                             staffId = 2,
                             retailId = 2,
-                            employedSince = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(257),
+                            employedSince = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5396),
                             role = "Staff"
                         },
                         new
                         {
                             staffId = 3,
                             retailId = 3,
-                            employedSince = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(258),
+                            employedSince = new DateTime(2022, 12, 28, 12, 59, 41, 811, DateTimeKind.Local).AddTicks(5398),
                             role = "Cashier"
                         });
                 });

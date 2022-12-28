@@ -3,19 +3,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Final.Models
 {
-    public class RetailChain
+    public class Retail
     {
         [Key]
-        public int? retailId { get; set; }
+        public int retailId { get; set; }
 
         [NotMapped]
-        public IList<EmployedAt>? EmployedAts { get; set; }
+        public IList<WorkedAt>? WorkedAt { get; set; }
 
         [NotMapped]
-        public IList<Inventory>? Inventorys { get; set; }
-
+        public IList<Storage>? Storage { get; set; }
+        [Required]
         public string? name { get; set; }
-
+        [Required]
         public string? address { get; set; }
 
 

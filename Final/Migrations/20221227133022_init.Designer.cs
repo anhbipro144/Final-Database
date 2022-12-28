@@ -4,6 +4,7 @@ using Final.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final.Migrations
 {
     [DbContext(typeof(FinalContext))]
-    partial class FinalContextModelSnapshot : ModelSnapshot
+    [Migration("20221227133022_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,6 +60,105 @@ namespace Final.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Final.Models.EmployedAt", b =>
+                {
+                    b.Property<int>("staffId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("retailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RetailChainretailId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("employedSince")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("staffId", "retailId");
+
+                    b.HasIndex("RetailChainretailId");
+
+                    b.ToTable("EmployedAts");
+
+                    b.HasData(
+                        new
+                        {
+                            staffId = 1,
+                            retailId = 1,
+                            employedSince = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3187),
+                            role = "Manager"
+                        },
+                        new
+                        {
+                            staffId = 2,
+                            retailId = 2,
+                            employedSince = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3197),
+                            role = "Staff"
+                        },
+                        new
+                        {
+                            staffId = 3,
+                            retailId = 3,
+                            employedSince = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3198),
+                            role = "Cashier"
+                        });
+                });
+
+            modelBuilder.Entity("Final.Models.Inventory", b =>
+                {
+                    b.Property<int>("inventoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("inventoryId"));
+
+                    b.Property<int?>("available")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("lastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("retailId")
+                        .HasColumnType("int");
+
+                    b.HasKey("inventoryId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("Inventories");
+
+                    b.HasData(
+                        new
+                        {
+                            inventoryId = 1,
+                            available = 500,
+                            productId = 1,
+                            retailId = 1
+                        },
+                        new
+                        {
+                            inventoryId = 2,
+                            available = 500,
+                            productId = 2,
+                            retailId = 2
+                        },
+                        new
+                        {
+                            inventoryId = 3,
+                            available = 500,
+                            productId = 3,
+                            retailId = 3
+                        });
+                });
+
             modelBuilder.Entity("Final.Models.Order", b =>
                 {
                     b.Property<int>("orderId")
@@ -94,7 +196,7 @@ namespace Final.Migrations
                         new
                         {
                             orderId = 1,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(280),
+                            createdAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3209),
                             personId = 1,
                             subtotal = 200m,
                             total = 220m,
@@ -103,7 +205,7 @@ namespace Final.Migrations
                         new
                         {
                             orderId = 2,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(291),
+                            createdAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3214),
                             personId = 2,
                             subtotal = 300m,
                             total = 330m,
@@ -112,64 +214,11 @@ namespace Final.Migrations
                         new
                         {
                             orderId = 3,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(295),
+                            createdAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3215),
                             personId = 3,
                             subtotal = 400m,
                             total = 440m,
                             vat = 40m
-                        });
-                });
-
-            modelBuilder.Entity("Final.Models.OrderItem", b =>
-                {
-                    b.Property<int>("orderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("productId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("countingUnit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("quantity")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("total")
-                        .IsRequired()
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("orderId", "productId");
-
-                    b.HasIndex("productId");
-
-                    b.ToTable("OrderItems");
-
-                    b.HasData(
-                        new
-                        {
-                            orderId = 1,
-                            productId = 1,
-                            countingUnit = "chiec",
-                            quantity = 10,
-                            total = 100m
-                        },
-                        new
-                        {
-                            orderId = 2,
-                            productId = 2,
-                            countingUnit = "chiec",
-                            quantity = 20,
-                            total = 200m
-                        },
-                        new
-                        {
-                            orderId = 3,
-                            productId = 3,
-                            countingUnit = "chiec",
-                            quantity = 30,
-                            total = 300m
                         });
                 });
 
@@ -222,7 +271,7 @@ namespace Final.Migrations
                         {
                             personId = 1,
                             address = "312, Lac Long Quan",
-                            dateOfBirth = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(318),
+                            dateOfBirth = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3248),
                             email = "nbi2271@gmail.com",
                             firstName = "Neo",
                             gender = "Male",
@@ -234,7 +283,7 @@ namespace Final.Migrations
                         {
                             personId = 2,
                             address = "262, Lac Long Quan",
-                            dateOfBirth = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(323),
+                            dateOfBirth = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3251),
                             email = "nbi6731@gmail.com",
                             firstName = "Lanh",
                             gender = "Male",
@@ -246,7 +295,7 @@ namespace Final.Migrations
                         {
                             personId = 3,
                             address = "458, Nguyen Huu Tho",
-                            dateOfBirth = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(327),
+                            dateOfBirth = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3253),
                             email = "nbi9922@gmail.com",
                             firstName = "Bi",
                             gender = "Male",
@@ -302,6 +351,59 @@ namespace Final.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Final.Models.Product_Order", b =>
+                {
+                    b.Property<int>("orderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("countingUnit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("quantity")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("total")
+                        .IsRequired()
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("orderId", "productId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("Product_Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            orderId = 1,
+                            productId = 1,
+                            countingUnit = "chiec",
+                            quantity = 10,
+                            total = 100m
+                        },
+                        new
+                        {
+                            orderId = 2,
+                            productId = 2,
+                            countingUnit = "chiec",
+                            quantity = 20,
+                            total = 200m
+                        },
+                        new
+                        {
+                            orderId = 3,
+                            productId = 3,
+                            countingUnit = "chiec",
+                            quantity = 30,
+                            total = 300m
+                        });
+                });
+
             modelBuilder.Entity("Final.Models.Refund", b =>
                 {
                     b.Property<int>("refundId")
@@ -336,30 +438,30 @@ namespace Final.Migrations
                         new
                         {
                             refundId = 1,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(386),
+                            createdAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3281),
                             orderId = 1,
                             productId = 1,
-                            reason = "FOr no reason"
+                            reason = "Tai t thich"
                         },
                         new
                         {
                             refundId = 2,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(390),
+                            createdAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3283),
                             orderId = 2,
                             productId = 2,
-                            reason = "For no reason again!"
+                            reason = "Tai t thich duoc k?"
                         },
                         new
                         {
                             refundId = 3,
-                            createdAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(392),
+                            createdAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3284),
                             orderId = 3,
                             productId = 3,
-                            reason = "Just like it"
+                            reason = "Tai t lai thich"
                         });
                 });
 
-            modelBuilder.Entity("Final.Models.Retail", b =>
+            modelBuilder.Entity("Final.Models.RetailChain", b =>
                 {
                     b.Property<int>("retailId")
                         .ValueGeneratedOnAdd()
@@ -377,7 +479,7 @@ namespace Final.Migrations
 
                     b.HasKey("retailId");
 
-                    b.ToTable("Retails");
+                    b.ToTable("RetailChains");
 
                     b.HasData(
                         new
@@ -432,56 +534,6 @@ namespace Final.Migrations
                         {
                             staffId = 3,
                             personId = 3
-                        });
-                });
-
-            modelBuilder.Entity("Final.Models.Storage", b =>
-                {
-                    b.Property<int>("storageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("storageId"));
-
-                    b.Property<int?>("available")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("lastUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("productId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("retailId")
-                        .HasColumnType("int");
-
-                    b.HasKey("storageId");
-
-                    b.HasIndex("productId");
-
-                    b.ToTable("Storages");
-
-                    b.HasData(
-                        new
-                        {
-                            storageId = 1,
-                            available = 500,
-                            productId = 1,
-                            retailId = 1
-                        },
-                        new
-                        {
-                            storageId = 2,
-                            available = 500,
-                            productId = 2,
-                            retailId = 2
-                        },
-                        new
-                        {
-                            storageId = 3,
-                            available = 500,
-                            productId = 3,
-                            retailId = 3
                         });
                 });
 
@@ -561,9 +613,9 @@ namespace Final.Migrations
                         {
                             supplyingId = 1,
                             amount = 10,
-                            arrivedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(506),
+                            arrivedAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3311),
                             hasArrived = false,
-                            orderedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(507),
+                            orderedAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3312),
                             productId = 1,
                             supplierId = 1
                         },
@@ -571,9 +623,9 @@ namespace Final.Migrations
                         {
                             supplyingId = 2,
                             amount = 20,
-                            arrivedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(511),
+                            arrivedAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3313),
                             hasArrived = true,
-                            orderedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(513),
+                            orderedAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3314),
                             productId = 2,
                             supplierId = 2
                         },
@@ -581,57 +633,11 @@ namespace Final.Migrations
                         {
                             supplyingId = 3,
                             amount = 30,
-                            arrivedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(515),
+                            arrivedAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3315),
                             hasArrived = false,
-                            orderedAt = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(516),
+                            orderedAt = new DateTime(2022, 12, 27, 20, 30, 22, 420, DateTimeKind.Local).AddTicks(3316),
                             productId = 3,
                             supplierId = 3
-                        });
-                });
-
-            modelBuilder.Entity("Final.Models.WorkedAt", b =>
-                {
-                    b.Property<int>("staffId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("retailId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("employedSince")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("staffId", "retailId");
-
-                    b.HasIndex("retailId");
-
-                    b.ToTable("EmployedAts");
-
-                    b.HasData(
-                        new
-                        {
-                            staffId = 1,
-                            retailId = 1,
-                            employedSince = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(238),
-                            role = "Manager"
-                        },
-                        new
-                        {
-                            staffId = 2,
-                            retailId = 2,
-                            employedSince = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(257),
-                            role = "Staff"
-                        },
-                        new
-                        {
-                            staffId = 3,
-                            retailId = 3,
-                            employedSince = new DateTime(2022, 12, 28, 13, 5, 40, 90, DateTimeKind.Local).AddTicks(258),
-                            role = "Cashier"
                         });
                 });
 
@@ -646,6 +652,34 @@ namespace Final.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Final.Models.EmployedAt", b =>
+                {
+                    b.HasOne("Final.Models.RetailChain", "RetailChain")
+                        .WithMany()
+                        .HasForeignKey("RetailChainretailId");
+
+                    b.HasOne("Final.Models.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("staffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RetailChain");
+
+                    b.Navigation("Staff");
+                });
+
+            modelBuilder.Entity("Final.Models.Inventory", b =>
+                {
+                    b.HasOne("Final.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Final.Models.Order", b =>
                 {
                     b.HasOne("Final.Models.Person", "Person")
@@ -657,7 +691,7 @@ namespace Final.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("Final.Models.OrderItem", b =>
+            modelBuilder.Entity("Final.Models.Product_Order", b =>
                 {
                     b.HasOne("Final.Models.Order", "Order")
                         .WithMany()
@@ -706,17 +740,6 @@ namespace Final.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("Final.Models.Storage", b =>
-                {
-                    b.HasOne("Final.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Final.Models.Supplying", b =>
                 {
                     b.HasOne("Final.Models.Product", "Product")
@@ -734,25 +757,6 @@ namespace Final.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("Final.Models.WorkedAt", b =>
-                {
-                    b.HasOne("Final.Models.Retail", "Retail")
-                        .WithMany()
-                        .HasForeignKey("retailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Final.Models.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("staffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Retail");
-
-                    b.Navigation("Staff");
                 });
 #pragma warning restore 612, 618
         }
